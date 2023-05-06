@@ -1,0 +1,26 @@
+-e # This file compiles the Arduino script and uploads it to the ESP 32 board
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout the repository
+      uses: actions/checkout@v2
+    - name: Setup Arduino IDE
+      uses: per1234/arduino-ide-setup@v1.0
+    - name: Compile and Upload
+      uses: per1234/compile-and-upload-to-arduino-action@v1.1
+      with:
+        fqbn: 'esp32:esp32:esp32'
+        sketchbook_path: ./sketchbook
+        sketch_path: ./sketchbook/src/sketch.ino
+        port: /dev/ttyUSB0
+        upload_speed: 115200
+
